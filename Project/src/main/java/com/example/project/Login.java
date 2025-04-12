@@ -29,9 +29,8 @@ public class Login extends Pane {
     private int sceneWidth;
     private String username;
     private String password;
-    private ArrayList <String> userdata;
-    private ArrayList <User> currentUser;
-    private User user;
+    private ArrayList <User> user;
+    private User currentUser;
 
     // ____________________________________________________
 
@@ -87,7 +86,7 @@ public class Login extends Pane {
 
         forgotButton = new Button("Forgot something?");
         forgotButton.setStyle("-fx-font-size: 15px; -fx-font-weight: bold; -fx-text-fill: rgba(0,0,0,0.50);" +
-                " -fx-border-radius: 15px; -fx-background-radius: 15px; -fx-border-color: rgba(0,0,0,0.50);");
+        " -fx-border-radius: 15px; -fx-background-radius: 15px; -fx-border-color: rgba(0,0,0,0.50);");
         forgotButton.setPrefHeight(30);
         forgotButton.setPrefWidth(200); // 2/3 of VBox scene // 15 padding
 
@@ -126,19 +125,23 @@ public class Login extends Pane {
 
     public void loadUserData(){
 
-        userdata = io.readData("src/main/java/data/userData.csv");
+        ArrayList <String> userdata = io.readData("src/main/java/data/userData.csv");
 
-        for (String s : userdata){
+        if(!userdata.isEmpty()) {
 
-            String[] values = s.split(", ");
-            String valuesUsername = values[0].trim();
-            String valuesPassword = values[1].trim();
-            String valuesEmail = values[2].trim();
-            String valuesStatus = values[3].trim();
-            String valuesBanned = values[4].trim();
+            for (String s : userdata) {
 
-            user = new User(valuesUsername, valuesPassword, valuesEmail, valuesStatus, valuesBanned);
-            currentUser.add(user);
+                String[] values = s.split(", ");
+                String valuesUsername = values[0].trim();
+                String valuesPassword = values[1].trim();
+                String valuesEmail = values[2].trim();
+                String valuesStatus = values[3].trim();
+                String valuesBanned = values[4].trim();
+
+                User u = new User(valuesUsername, valuesPassword, valuesEmail, valuesStatus, valuesBanned);
+                user.add(u);
+
+            }
 
         }
 
@@ -148,7 +151,7 @@ public class Login extends Pane {
 
     public void loginButtonAction(){
 
-        for(User u : currentUser){
+        for(User u : user){
 
             if(getUsername().equals(u.getUsername()) && getPassword().equals(u.getPassword())){
                 System.out.println("Success #DEBUG");
