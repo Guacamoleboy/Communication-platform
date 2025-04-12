@@ -1,4 +1,4 @@
-package com.example.project;
+package App;
 
 public class User {
 
@@ -7,18 +7,18 @@ public class User {
     private String username;
     private String password;
     private String email;
-    private String banned;
     private String status;
+    private String banned;
 
     // ____________________________________________________
 
-    public User(String username, String password, String email, String banned, String status){
+    public User(String username, String password, String email, String status, String banned){
 
         this.username = username;
         this.password = password;
         this.email = email;
-        this.banned = banned;
         this.status = status;
+        this.banned = banned;
 
     }
 
@@ -50,6 +50,20 @@ public class User {
 
     public String getStatus(){
         return this.status;
+    }
+
+    // ____________________________________________________
+
+    public void setStatus(String status){
+        this.status = status;
+    }
+
+    // ____________________________________________________
+
+    public String toCSV(){
+
+        return this.username + ", " + this.password + ", " + this.email + ", " + this.status + ", " + this.banned;
+
     }
 
 }

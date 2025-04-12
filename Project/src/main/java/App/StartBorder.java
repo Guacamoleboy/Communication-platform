@@ -1,5 +1,5 @@
 // Packages
-package com.example.project;
+package App;
 
 // Imports
 import javafx.scene.layout.Pane;

@@ -38,30 +38,18 @@ public class FileIO { // Custom generic util.FileIO
 
         try {
 
-            File file = new File(path);
-            FileWriter writer = new FileWriter(path, true);
-            StringBuilder data = new StringBuilder();
+            FileWriter writer = new FileWriter(path);
 
-            boolean fileExist = file.exists();
-            boolean fileIsEmpty = fileExist && file.length() == 0;
-
-
-            if (fileIsEmpty){
-                writer.write(header + "\n");
-            }
-
+            writer.write(header+"\n");
 
             for(int i = 0; i < list.size(); i++){
-                data.append(list.get(i));
+                writer.write(list.get(i));
 
                 // Checks for last character basically. Fixes our empty line creation issue.
                 if(i < list.size() - 1){
-                    data.append(", ");
+                    writer.write("\n");
                 }
             }
-
-            // Add to file
-            writer.write("\n" + data.toString());
 
             writer.close(); // Closes our writer
 

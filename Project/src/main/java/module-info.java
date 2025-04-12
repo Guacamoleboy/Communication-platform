@@ -3,6 +3,6 @@ module com.example.project {
     requires javafx.fxml;
 
 
-    opens com.example.project to javafx.fxml;
-    exports com.example.project;
+    opens App to javafx.fxml;
+    exports App;
 }

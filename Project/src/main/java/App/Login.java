@@ -1,5 +1,5 @@
 // Packages
-package com.example.project;
+package App;
 
 // Imports
 import javafx.geometry.Insets;
@@ -15,8 +15,6 @@ import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import util.*;
 
-import java.util.ArrayList;
-
 public class Login extends Pane {
 
     // Attributes
@@ -26,18 +24,23 @@ public class Login extends Pane {
     private Button loginButton;
     private Button forgotButton;
     private Button registerButton;
+    private ProcessData processdata;
+
     private int sceneWidth;
+    private int sceneHeight;
     private String username;
     private String password;
-    private ArrayList <User> user;
-    private User currentUser;
 
     // ____________________________________________________
 
-    public Login(int sceneWidth){
+    public Login(int sceneWidth, int sceneHeight){
 
         this.sceneWidth = sceneWidth;
-        this.setPrefWidth(this.sceneWidth);
+        this.sceneHeight = sceneHeight;
+
+        // Display setup
+        this.setPrefWidth(sceneWidth);
+        this.setPrefHeight(sceneHeight);
         this.setStyle("-fx-background-color: #AAAAAAFF");
 
         // Create
@@ -110,9 +113,9 @@ public class Login extends Pane {
     public void registerButtonAction(){
 
         // If user presses the Register button!
-        Register register = new Register(600);
+        Register register = new Register(600, 600);
         StartBorder sb = new StartBorder(3);
-        StartInfo si = new StartInfo(300);
+        StartInfo si = new StartInfo(300, 600);
         HBox registerHBox = new HBox(register, sb, si);
 
         Scene registerScene = new Scene(registerHBox, 900, 600);
@@ -123,41 +126,33 @@ public class Login extends Pane {
 
     // ____________________________________________________
 
-    public void loadUserData(){
-
-        ArrayList <String> userdata = io.readData("src/main/java/data/userData.csv");
-
-        if(!userdata.isEmpty()) {
-
-            for (String s : userdata) {
-
-                String[] values = s.split(", ");
-                String valuesUsername = values[0].trim();
-                String valuesPassword = values[1].trim();
-                String valuesEmail = values[2].trim();
-                String valuesStatus = values[3].trim();
-                String valuesBanned = values[4].trim();
-
-                User u = new User(valuesUsername, valuesPassword, valuesEmail, valuesStatus, valuesBanned);
-                user.add(u);
-
-            }
-
-        }
-
-    }
-
-    // ____________________________________________________
-
     public void loginButtonAction(){
 
-        for(User u : user){
+        boolean loggedIn = false;
+        ProcessData processdata = new ProcessData();
 
+        // Check username && password
+        for(User u : processdata.getUsers()){
             if(getUsername().equals(u.getUsername()) && getPassword().equals(u.getPassword())){
-                System.out.println("Success #DEBUG");
-            } else {
-                System.out.println("Fail #DEBUG");
+                loggedIn = true;
+                processdata.setStatus(u.getUsername(), "Online");
+                break;
             }
+        } // For-each end
+
+        if (loggedIn){
+
+            Menu menu = new Menu(getUsername(), getPassword(), 900, 600);
+            Scene menuScene = new Scene(menu, 900, 600);
+
+            Stage stage = (Stage) getScene().getWindow();
+            stage.setScene(menuScene);
+
+            System.out.println("#DEBUG - SUCCESS");
+
+        } else {
+
+            System.out.println("#DEBUG - FAIL");
 
         }
 

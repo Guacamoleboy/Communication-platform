@@ -1,5 +1,5 @@
 // Packages
-package com.example.project;
+package App;
 
 // Imports
 import javafx.geometry.Pos;
@@ -10,7 +10,7 @@ import util.*;
 
 import java.util.ArrayList;
 
-public class Register extends Pane {
+public class Register extends VBox {
 
     // Attributes
     private TextField usernameField;
@@ -22,6 +22,7 @@ public class Register extends Pane {
     private Button forgotButton;
     private Button registerButton;
     private int sceneWidth;
+    private int sceneHeight;
     private String username;
     private String password;
     private String passwordConfirmation;
@@ -30,10 +31,11 @@ public class Register extends Pane {
 
     // ____________________________________________________
 
-    public Register(int sceneWidth){
+    public Register(int sceneWidth, int sceneHeight){
 
         this.sceneWidth = sceneWidth;
-        this.setPrefWidth(this.sceneWidth);
+        this.sceneHeight = sceneHeight;
+        this.setPrefSize(sceneWidth, sceneHeight);
         this.setStyle("-fx-background-color: #AAAAAAFF");
 
         // Create
@@ -48,8 +50,6 @@ public class Register extends Pane {
         VBox loginBox = new VBox(15); // Padding / Margin
         loginBox.setAlignment(Pos.CENTER);
         loginBox.setPrefWidth(400); // Center of 600 (Scene)
-        loginBox.setLayoutX(100);
-        loginBox.setLayoutY(100);
 
         Label loginLabel = new Label("Create Account");
         loginLabel.setStyle("-fx-font-size: 48px; -fx-font-weight: bold; -fx-text-fill: rgba(0,0,0,0.50);");
